@@ -1,6 +1,11 @@
 module Pokesync
   extend self
 
+  def sync_all
+    sync_types
+    sync_pokemons
+  end
+
   def sync_types
     response = Pokeapi.types
     offset = 0
