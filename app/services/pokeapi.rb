@@ -10,7 +10,7 @@ module Pokeapi
 
     response = RestClient.get url, accept: :json
 
-    JSON.parse response
+    JSON.parse(response).with_indifferent_access
   end
 
   def type(name)
@@ -18,6 +18,6 @@ module Pokeapi
 
     response = RestClient.get url, accept: :json
 
-    JSON.parse response
+    JSON.parse(response).with_indifferent_access
   end
 end
