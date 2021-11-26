@@ -8,31 +8,31 @@ module Pokeapi
     url = "#{HOST}/type"
     url += "?offset=#{LIMIT * offset}" if offset > 0
 
-    response = RestClient.get url, accept: :json
-
-    JSON.parse(response).with_indifferent_access
+    get url
   end
 
   def type(name)
     url = "#{HOST}/type/#{name}"
 
-    response = RestClient.get url, accept: :json
-
-    JSON.parse(response).with_indifferent_access
+    get url
   end
 
   def pokemons(offset: 0)
     url = "#{HOST}/pokemon"
     url += "?offset=#{LIMIT * offset}" if offset > 0
 
-    response = RestClient.get url, accept: :json
-
-    JSON.parse(response).with_indifferent_access
+    get url
   end
 
   def pokemon(name)
     url = "#{HOST}/pokemon/#{name}"
 
+    get url
+  end
+
+  private
+
+  def get(url)
     response = RestClient.get url, accept: :json
 
     JSON.parse(response).with_indifferent_access
