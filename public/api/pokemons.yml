@@ -1,0 +1,86 @@
+openapi: 3.0.0
+info:
+  title: Pokemon API
+  version: "1.0"
+servers:
+  - url: https://pokermonvv2.herokuapp.com/pokemons
+paths:
+  /pokemons:
+    get:
+      tags:
+        - Pokemons
+      description: |
+        Returns information about pokemons. By design it returns the first 20 records and you can request additional ones, in 20 batches, by supplying an offset parameter.
+       
+        Example request:
+    
+        ```shell
+          curl https://pokermonvv2.herokuapp.com/pokemons
+        ```
+      
+      parameters:
+        - in: query
+          name: offset
+          schema:
+            type: integer
+          required: false
+          description: Offset used for pagination. Moves the results in batches of 20. offset=1 means give me the second batch of 20 results, offset=2 - the third batch and so on.
+
+      responses:
+        200:
+          description: A successful JSON response.
+          content:
+            appliaction/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          description: The pokemon ID in the database.
+                        name:
+                          type: string
+                          description: Pokemon name.
+                        types:
+                          type: array
+                          description: Pokemon types.
+                          items:
+                            type: string
+  /pokemon/{id}:
+    get:
+      tags:
+        - Pokemons
+      description: |
+        Returns information specific pokemon.
+       
+        Example request:
+    
+        ```shell
+          curl https://pokermonvv2.herokuapp.com/pokemon/1
+        ```
+      
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: The pokemon id in the database.
+
+      responses:
+        200:
+          description: A successful JSON response.
+          content:
+            appliaction/json:
+              schema:
+                type: object
+                properties:
+                  height:
+                    type: integer
+                  weight:
+                    type: integer
+
