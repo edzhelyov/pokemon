@@ -4,31 +4,26 @@ module Pokeapi
   HOST = 'https://pokeapi.co/api/v2'
   LIMIT = 20
 
-  def types(offset: 0)
-    url = "#{HOST}/type"
-    url += "?offset=#{LIMIT * offset}" if offset > 0
+  class << self
+    def api(resource)
+      define_singleton_method resource.to_s.pluralize do |offset: 0|
+        url = "#{HOST}/#{resource.to_s.singularize}"
+        url += "?offset=#{LIMIT * offset}" if offset > 0
 
-    get url
+        get url
+      end
+
+      define_singleton_method resource.to_s.singularize do |name|
+        url = "#{HOST}/#{resource.to_s.singularize}/#{name}"
+
+        get url
+      end
+    end
   end
 
-  def type(name)
-    url = "#{HOST}/type/#{name}"
-
-    get url
-  end
-
-  def pokemons(offset: 0)
-    url = "#{HOST}/pokemon"
-    url += "?offset=#{LIMIT * offset}" if offset > 0
-
-    get url
-  end
-
-  def pokemon(name)
-    url = "#{HOST}/pokemon/#{name}"
-
-    get url
-  end
+  api :type
+  api :ability
+  api :pokemon
 
   private
 
