@@ -38,3 +38,7 @@ We expose two endpoints:
 ## Running specs
 
 Run `bundle exec rspec` to run all specs.
+
+## Design considerations
+
+I use the models as primary domain representation and sync them with the results taken from the API. The Pokeapi returns simple responses in the form of a parsed JSON without a specific structure, while we can put a validation of the received JSON I've decided to go with a more simple route and just transform the resulting Hash in the Pokesync child classes.
